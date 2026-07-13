@@ -1,5 +1,10 @@
 ﻿{
   "buildCommand": "vite build",
   "installCommand": "npm install",
-  "outputDirectory": "dist/client"
+  "outputDirectory": "dist/client",
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "@vercel/node@3"
+    }
+  }
 }
