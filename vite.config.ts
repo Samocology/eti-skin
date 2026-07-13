@@ -11,9 +11,6 @@ export default defineConfig({
     tailwindcss(),
     tsConfigPaths(),
   ],
-  tanstackStart: {
-    server: { entry: 'server' },
-  },
   nitro: {
     preset: 'node-server',
   },
