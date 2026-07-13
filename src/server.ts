@@ -1,6 +1,10 @@
 ﻿import { createServer } from 'http'
 import { readFileSync, existsSync } from 'fs'
-import { join, extname } from 'path'
+import { join, extname, dirname } from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const PORT = process.env.PORT || 3000
 
@@ -16,16 +20,8 @@ const MIME: Record<string, string> = {
 
 const server = createServer((req, res) => {
   const url = req.url || '/'
-  
-  // API routes
-  if (url === '/api/health') {
-    res.writeHead(200, { 'Content-Type': 'application/json' })
-    res.end(JSON.stringify({ status: 'ok' }))
-    return
-  }
 
-  // Static files
-  const filePath = url === '/' 
+  const filePath = url === '/'
     ? join(__dirname, '../client/index.html')
     : join(__dirname, '../client', url)
 
@@ -38,7 +34,6 @@ const server = createServer((req, res) => {
       res.writeHead(200, { 'Content-Type': contentType })
       res.end(content)
     } else {
-      // SPA fallback
       const html = readFileSync(join(__dirname, '../client/index.html'), 'utf-8')
       res.writeHead(200, { 'Content-Type': 'text/html' })
       res.end(html)
@@ -50,5 +45,5 @@ const server = createServer((req, res) => {
 })
 
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+  console.log('Server running on port ' + PORT)
 })
