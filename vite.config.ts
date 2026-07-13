@@ -11,7 +11,6 @@ export default defineConfig({
     tailwindcss(),
     tsConfigPaths(),
   ],
-  // @ts-ignore
   tanstackStart: {
     server: { entry: 'server' },
   },
