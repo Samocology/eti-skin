@@ -6,12 +6,12 @@
     "type":  "module",
     "scripts":  {
                     "dev":  "vite dev",
-                    "build":  "vite build",
+                    "build":  "vite build \u0026\u0026 node inject-script.cjs",
                     "build:dev":  "vite build --mode development",
                     "preview":  "vite preview",
                     "lint":  "eslint .",
                     "format":  "prettier --write .",
-                    "start":  "node --import tsx src/run-server.ts"
+                    "start":  "node run-server.js"
                 },
     "dependencies":  {
                          "@hookform/resolvers":  "^5.2.2",
