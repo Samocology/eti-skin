@@ -13,8 +13,5 @@ export default defineConfig({
     tailwindcss(),
     tsConfigPaths(),
   ],
-  // @ts-ignore - tanstackStart is injected by the plugin
-  tanstackStart: {
-    server: { entry: 'server' },
-  },
+
 })
