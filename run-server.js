@@ -1,9 +1,9 @@
 import { createServer } from 'http'
 import { readFile } from 'fs/promises'
-import { join, extname } from 'path'
+import { join, extname, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
-const __dirname = fileURLToPath(import.meta.url)
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const STATIC_DIR = join(__dirname, 'dist', 'client')
 const MIME_TYPES = {
   '.js': 'application/javascript',
