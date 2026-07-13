@@ -11,8 +11,11 @@ export default defineConfig({
     tailwindcss(),
     tsConfigPaths(),
   ],
-  server: {
-    port: 3000,
-    open: true,
+  // @ts-ignore
+  tanstackStart: {
+    server: { entry: 'server' },
+  },
+  nitro: {
+    preset: 'vercel',
   },
 })
