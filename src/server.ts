@@ -1,6 +1,6 @@
 ﻿import { createServer } from 'http'
-import { readFileSync, existsSync } from 'fs'
-import { join, extname, dirname } from 'path'
+import { readFileSync } from 'fs'
+import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -11,34 +11,45 @@ const PORT = process.env.PORT || 3000
 const MIME: Record<string, string> = {
   '.html': 'text/html',
   '.js': 'application/javascript',
+  '.mjs': 'application/javascript',
   '.css': 'text/css',
   '.ico': 'image/x-icon',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.svg': 'image/svg+xml',
+  '.json': 'application/json',
+}
+
+function serveStatic(url: string) {
+  const filePath = url === '/' 
+    ? join(__dirname, '../client/index.html')
+    : join(__dirname, '../client', url)
+  
+  try {
+    const content = readFileSync(filePath)
+    const ext = '.' + filePath.split('.').pop()
+    return { content, type: MIME[ext] || 'application/octet-stream' }
+  } catch {
+    return null
+  }
 }
 
 const server = createServer((req, res) => {
   const url = req.url || '/'
+  
+  const file = serveStatic(url)
+  if (file) {
+    res.writeHead(200, { 'Content-Type': file.type })
+    res.end(file.content)
+    return
+  }
 
-  const filePath = url === '/'
-    ? join(__dirname, '../client/index.html')
-    : join(__dirname, '../client', url)
-
-  const ext = extname(filePath)
-  const contentType = MIME[ext] || 'application/octet-stream'
-
-  try {
-    if (existsSync(filePath)) {
-      const content = readFileSync(filePath)
-      res.writeHead(200, { 'Content-Type': contentType })
-      res.end(content)
-    } else {
-      const html = readFileSync(join(__dirname, '../client/index.html'), 'utf-8')
-      res.writeHead(200, { 'Content-Type': 'text/html' })
-      res.end(html)
-    }
-  } catch {
+  // SPA fallback for client-side routing
+  const html = serveStatic('/')
+  if (html) {
+    res.writeHead(200, { 'Content-Type': 'text/html' })
+    res.end(html.content)
+  } else {
     res.writeHead(500)
     res.end('Server Error')
   }

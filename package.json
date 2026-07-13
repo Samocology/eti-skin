@@ -1,11 +1,12 @@
 {
     "name":  "tanstack_start_ts",
+    "version":  "1.0.0",
     "private":  true,
     "sideEffects":  false,
     "type":  "module",
     "scripts":  {
                     "dev":  "vite dev",
-                    "build":  "vite build",
+                    "build":  "vite build \u0026\u0026 node inject-script.cjs",
                     "build:dev":  "vite build --mode development",
                     "preview":  "vite preview",
                     "lint":  "eslint .",
@@ -45,7 +46,6 @@
                          "@tanstack/react-router":  "^1.45.0",
                          "@tanstack/react-start":  "^1.45.0",
                          "@tanstack/router-plugin":  "^1.45.0",
-                         "@vercel/node":  "^5.8.23",
                          "class-variance-authority":  "^0.7.1",
                          "clsx":  "^2.1.1",
                          "cmdk":  "^1.1.1",
@@ -68,7 +68,6 @@
                          "zod":  "^3.24.2"
                      },
     "devDependencies":  {
-                            "@cloudflare/workers-types":  "^5.20260713.1",
                             "@eslint/js":  "^9.32.0",
                             "@types/node":  "^22.16.5",
                             "@types/react":  "^19.2.0",
